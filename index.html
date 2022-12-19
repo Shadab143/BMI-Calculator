@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMI Calculator</title>
+    <link rel="stylesheet" href="./node_modules/bootstrap-icons/bootstrap-icons.svg">
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.css">
+   
+    <style>
+        .box {
+            border: 2px solid black;
+            box-shadow: 4px 4px 3px gray;
+            padding-top: 40px;
+        }
+        #lblAmount,
+        #lblYear,
+        #lblRate {
+            border: 1px solid black;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 5px
+        }
+        #rangeAmount,
+        #rangeYear,
+        #rangeRate {
+            width: 150px;
+            padding: 5px;
+        }
+    </style> 
+     <script>
+        var amount, rate,years;
+        function AmountChange(){
+       amount = document.getElementById("rangeAmount").value;
+        document.getElementById("lblAmount").innerHTML =`&#8377 : ${amount}`
+        }
+        function YearChange(){
+        years = document.getElementById("rangeYear").value;
+        document.getElementById("lblYear").innerHTML = `${years}`;
+        }
+        function RateChange(){
+        rate = document.getElementById("rangeRate").value ;
+        document.getElementById("lblRate").innerHTML = `${rate}%`;
+        }
+        
+        function Calculate(){
+            var p = parseFloat(amount);
+            var n = parseInt(years)*12;
+            var r = parseFloat(rate)/12/100;
+            var EMI =  p * r / (1- (Math.pow(1/(1 + r), n)));
+            document.getElementById("lblResult").innerHTML = `Yur EMI Amount is ${Math.round(EMI)} per month`;
+        }
+
+    </script>
+</head>
+
+<body class="container-fluid">
+    <h1 class="text-center">Personal Loan EMI Calculator</h1>
+    <div class="box p-4">
+        <div class="row mt3">
+            <div class="col">
+                Amount you need <span id="lblAmount">&#8377 55,000</span>
+            </div>
+            <div class="col">
+                for <span id="lblYear"> 5 </span> years
+            </div>
+            <div class="col">
+                Interest rate <span id="lblRate">16.45</span>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col input-group">
+                <span>50,000/-</span>
+                <input type="range" id="rangeAmount" onchange="AmountChange()" class="form-range" value="55000"
+                    min="50000" max="500000">
+                <span>5,00,000/-</span>
+            </div>
+            <div class="col input-group">
+                <span>1</span>
+                <input type="range" id="rangeYear" onchange="YearChange()" class="form-range" value="1" min="1" max="5">
+                <span>5</span>
+            </div>
+            <div class="col input-group">
+                <span>10%</span>
+                <input type="range" id="rangeRate" onchange="RateChange()" value="10.00" min="10.00" max="21.00">
+                <span>21%</span>
+            </div>
+        </div>
+
+        <div class="text-center pt-4">
+            <button class="btn btn-primary" onclick="Calculate()">Calculate</button>
+        </div>
+        <div class="text-center mt-4">
+            <p id="lblResult"></p>
+        </div>
+    </div>
+
+</body>
+
+</html>
